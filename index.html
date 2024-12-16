@@ -17,7 +17,7 @@
             <div class="playerBox">
             <div >
                 <label for="player1Name">Player 1</label>
-                <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
+                <input type="text" id="player1Name" placeholder="Enter Player 1 Name" required>
                 <label for="player1SymbolSelctor"> Player 1 Symbol</label>
                 <select name="SymbolSelection" id="player1SymbolSelctor">
                     <option value="X" selected>X</option>
@@ -26,7 +26,7 @@
             </div>
             <div >
                 <label for="player2Name">Player 2</label>
-                <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
+                <input type="text" id="player2Name" placeholder="Enter Player 2 Name" required>
                 <p class="labelP"> Player 2 Symbol</p>
                 <p id="Player2SymbolSelector">O</p>
             </div>
@@ -35,6 +35,13 @@
             <button>Start game</button>
         </div>
         </div>
+        <div id="ticTacToeGridContainer">
+                <div id="nameSymbolDisplay">
+                    <div id="player1SymbolDiv"></div>
+                    <div id="player2SymbolDiv"></div>
+                </div>
+                <div id="Xplaysdisplay">X Plays first!</div>
+            </div>
         <div id="ticTocToeGrid">
             <div class="gridElement" id="gridBoardcell0">
                 <p></p>
@@ -65,9 +72,10 @@
             </div>
         </div>
     </div>
+    </div>
     <div id="resultAnnouncement">
         <p>Draw!</p>
-        <button>Restart</button>
+        <button id="resultAnnouncementButton">Restart</button>
 
     </div>
 </body>

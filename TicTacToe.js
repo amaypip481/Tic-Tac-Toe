@@ -16,109 +16,130 @@ function gameBoardCell(elementID, isSymbolX) {
     return eachCell;
 }
 
-// //Decide who playes first
-
-// function initializegameComputer() {
-//     let choosePlayer = Math.random();
-//     if (choosePlayer < 0.5)
-//         return 1;
-//     else return 2;
-// }
 
 //Intialize the game
 
 function initializeGame(player1Name, player2Name, player1Symbol, player2Symbol) {
-    let player1 = new Player(player1Name, player1Symbol );  // receive it from the selected button by the player
+    let player1 = new Player(player1Name, player1Symbol);  // receive it from the selected button by the player
     let player2 = new Player(player2Name, player2Symbol);  // receive it from the selected button by the player
     let isPlayer1Playing = 1;
+    let attemptCount = 0;
 
     function gameboard() {
         let gameArray = [];
-        for (let i = 0; i < GAMEBOARDSIZE*GAMEBOARDSIZE; i++) {
-                let elementID = "gridBoardcell" + i;
-                let newcell = gameBoardCell(elementID, "");
-                gameArray.push(newcell);
+        for (let i = 0; i < GAMEBOARDSIZE * GAMEBOARDSIZE; i++) {
+            let elementID = "gridBoardcell" + i;
+            let newcell = gameBoardCell(elementID, "");
+            gameArray.push(newcell);
         }
         return gameArray;
     }
 
     let gameBoardArray = gameboard();
 
-    return {gameBoardArray, player1, player2, isPlayer1Playing};
+    return { gameBoardArray, player1, player2, isPlayer1Playing, attemptCount };
 }
 
 // function for each time the game is played
 
-function playGame(event){
+function playGame(event) {
 
-    if(CURRENTGAMEBOARD.isPlayer1Playing){
+    if (CURRENTGAMEBOARD.isPlayer1Playing) {
 
-    let result = CURRENTGAMEBOARD.gameBoardArray.find((item) => {
-       return item.elementID == event.target.id;
-       
-    });
-    result.isSymbolX = 1;
-    event.target.firstElementChild.innerText = "X";
-    CURRENTGAMEBOARD.isPlayer1Playing =  !CURRENTGAMEBOARD.isPlayer1Playing;
-}
+        let result = CURRENTGAMEBOARD.gameBoardArray.find((item) => {
+            return item.elementID == event.target.id;
+
+        });
+        result.isSymbolX = 1;
+        event.target.firstElementChild.innerText = "X";
+        CURRENTGAMEBOARD.isPlayer1Playing = !CURRENTGAMEBOARD.isPlayer1Playing;
+    }
 
 
-else{
-    let result = CURRENTGAMEBOARD.gameBoardArray.find((item) => {
-      return  item.elementID == event.target.id;
-    });
-    result.isSymbolX = 0;
-    event.target.firstElementChild.innerText = "O";
-    CURRENTGAMEBOARD.isPlayer1Playing = !CURRENTGAMEBOARD.isPlayer1Playing;
-}
-checkWinner();
+    else {
+        let result = CURRENTGAMEBOARD.gameBoardArray.find((item) => {
+            return item.elementID == event.target.id;
+        });
+        result.isSymbolX = 0;
+        event.target.firstElementChild.innerText = "O";
+        CURRENTGAMEBOARD.isPlayer1Playing = !CURRENTGAMEBOARD.isPlayer1Playing;
+    }
+    CURRENTGAMEBOARD.attemptCount++;
+    if (CURRENTGAMEBOARD.attemptCount > 4) {
+        let isWinnerAnnounced =false;
+        checkWinner(isWinnerAnnounced);
+        if (CURRENTGAMEBOARD.attemptCount == 9 && !checkWinner(isWinnerAnnounced))
+            goForDraw();
+    }
+
+
+
 }
 
 // Check for winner
-function checkWinner(){
+function checkWinner(isWinnerAnnounced) {
     let arrayforPlayerwithX = [];
     let arrayforPlayerwithO = [];
-    CURRENTGAMEBOARD.gameBoardArray.forEach((arrayitems,index)=>{
-        if(arrayitems.isSymbolX === 1)
-        {
-         arrayforPlayerwithX.push(index);
-         if(arrayforPlayerwithX.length >= 3){
-         if(checkSequence(arrayforPlayerwithX,index))
-            {
-                if(CURRENTGAMEBOARD.player1.symbol = "X")
-                console.log(`${CURRENTGAMEBOARD.player1.name} wins`);
-                else console.log(`${CURRENTGAMEBOARD.player2.name} wins`);
-            }  
-        }
-        }
-        if(arrayitems.isSymbolX === 0)
-            {
-             arrayforPlayerwithO.push(index);
-             if(arrayforPlayerwithO.length >= 3){
-             if(checkSequence(arrayforPlayerwithO,index))
-                {
-                    if(CURRENTGAMEBOARD.player1.symbol = "O")
-                        console.log(`${CURRENTGAMEBOARD.player1.name} wins`);
-                        else console.log(`${CURRENTGAMEBOARD.player2.name} wins`);
-                }  
+    CURRENTGAMEBOARD.gameBoardArray.forEach((arrayitems, index) => {
+        if (arrayitems.isSymbolX === 1) {
+            arrayforPlayerwithX.push(index);
+            if (arrayforPlayerwithX.length >= 3) {
+                if (checkSequence(arrayforPlayerwithX, index)) {
+                    if (CURRENTGAMEBOARD.player1.symbol === "X") {
+                        announcementText(CURRENTGAMEBOARD.player1.name);
+                        isWinnerAnnounced = true;
+                    }
+                    else {
+                        announcementText(CURRENTGAMEBOARD.player2.name);
+                        isWinnerAnnounced = true;
+                    }
+                }
             }
+        }
+        if (arrayitems.isSymbolX === 0) {
+            arrayforPlayerwithO.push(index);
+            if (arrayforPlayerwithO.length >= 3) {
+                if (checkSequence(arrayforPlayerwithO, index)) {
+                    if (CURRENTGAMEBOARD.player1.symbol === "O") {
+                        announcementText(CURRENTGAMEBOARD.player1.name);
+                        isWinnerAnnounced = true;
+                    }
+                    else {
+                        announcementText(CURRENTGAMEBOARD.player2.name);
+                        isWinnerAnnounced = true;
+                    }
+                }
             }
+        }
     });
+    return isWinnerAnnounced;
+}
+
+function announcementText(name) {
+    document.querySelector("#resultAnnouncement").firstElementChild.innerText = `${name} wins`;
+    document.querySelector("#resultAnnouncement").style.display = "flex";
+
+}
+
+// Check for draw
+function goForDraw() {
+    document.querySelector("#resultAnnouncement").firstElementChild.innerText = `It's a Draw!`;
+    document.querySelector("#resultAnnouncement").style.display = "flex";
 }
 
 
-function checkSequence(indexArray, index){
-    if((indexArray.includes(1) && indexArray.includes(2) && indexArray.includes(0)) 
-        || (indexArray.includes(4) && indexArray.includes(5) && indexArray.includes(3)) 
+function checkSequence(indexArray, index) {
+    if ((indexArray.includes(1) && indexArray.includes(2) && indexArray.includes(0))
+        || (indexArray.includes(4) && indexArray.includes(5) && indexArray.includes(3))
         || (indexArray.includes(7) && indexArray.includes(8) && indexArray.includes(6)))
         return true;
-    else if((indexArray.includes(0) && indexArray.includes(3) && indexArray.includes(6)) 
-        || (indexArray.includes(1) && indexArray.includes(4) && indexArray.includes(7)) 
+    else if ((indexArray.includes(0) && indexArray.includes(3) && indexArray.includes(6))
+        || (indexArray.includes(1) && indexArray.includes(4) && indexArray.includes(7))
         || (indexArray.includes(2) && indexArray.includes(5) && indexArray.includes(8)))
         return true;
-    else if((indexArray.includes(0) && indexArray.includes(4) && indexArray.includes(8)) 
+    else if ((indexArray.includes(0) && indexArray.includes(4) && indexArray.includes(8))
         || (indexArray.includes(2) && indexArray.includes(4) && indexArray.includes(6)))
-    return true;
+        return true;
 
     else return false;
 }
@@ -128,13 +149,11 @@ function checkSequence(indexArray, index){
 
 let selector = document.querySelector("#player1SymbolSelctor");
 
-selector.addEventListener("change", ()=>{
-    if(selector.value == "X")
-    {
+selector.addEventListener("change", () => {
+    if (selector.value == "X") {
         document.querySelector("#Player2SymbolSelector").innerText = "O";
     }
-    else if(selector.value == "O")
-    {
+    else if (selector.value == "O") {
         document.querySelector("#Player2SymbolSelector").innerText = "X";
     }
 })
@@ -143,15 +162,25 @@ selector.addEventListener("change", ()=>{
 
 document.querySelector("#startGame").addEventListener("click", startGame);
 
-function startGame(e){
-
+function startGame(e) {
     let player1Name = document.querySelector("#player1Name").value;
     let player2Name = document.querySelector("#player2Name").value;
+    if (player1Name === "") {
+        document.querySelector("#player1Name").style.border = "3px solid red";
+        return;
+    }
+    else if (player2Name === "") {
+        document.querySelector("#player2Name").style.border = "3px solid red";
+        return;
+    }
     let player1Symbol = document.querySelector("#player1SymbolSelctor").value;
-    let player2Symbol =document.querySelector("#Player2SymbolSelector").innerText;
-    CURRENTGAMEBOARD =  initializeGame(player1Name, player2Name, player1Symbol, player2Symbol);
+    let player2Symbol = document.querySelector("#Player2SymbolSelector").innerText;
+    CURRENTGAMEBOARD = initializeGame(player1Name, player2Name, player1Symbol, player2Symbol);
     document.querySelector("#playerDetails").style.display = "none";
     document.querySelector("#ticTocToeGrid").style.display = "grid";
+    document.querySelector("#ticTacToeGridContainer").style.display = "flex";
+    document.querySelector("#player1SymbolDiv").innerText = `${player1Name} selects "${player1Symbol}"`;
+    document.querySelector("#player2SymbolDiv").innerText = `${player2Name} selects "${player2Symbol}"`;
 
 }
 
@@ -159,8 +188,21 @@ function startGame(e){
 
 let allGridDivs = document.querySelectorAll(".gridElement");
 
-allGridDivs.forEach((item)=>{item.addEventListener("click", playGame)});
+allGridDivs.forEach((item) => { item.addEventListener("click", playGame) });
 
+// restart button listener
+let restartButton = document.querySelector("#resultAnnouncementButton").addEventListener("click", resetgame);
 
+function resetgame() {
+    let gridElementList = document.querySelectorAll(".gridElement");
+    gridElementList.forEach((item) => { item.firstElementChild.innerText = "" });
+    document.querySelector("#playerDetails").style.display = "flex";
+    document.querySelector("#ticTocToeGrid").style.display = "none";
+    document.querySelector("#ticTacToeGridContainer").style.display = "none";
+    document.querySelector("#resultAnnouncement").style.display = "none";
+    document.querySelector("#player1Name").value = "";
+    document.querySelector("#player2Name").value = "";
+    CURRENTGAMEBOARD = {};
+}
 
 
