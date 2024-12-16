@@ -10,9 +10,9 @@ body{
 
 #container{
     display: grid;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr 1fr 5fr;
     justify-items: center;
-    width: 40rem;
+    width: 22rem;
     height: 35rem;
 }
 
@@ -36,7 +36,6 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-
     .playerBox{
         display: flex;
         gap: 2rem;
@@ -102,10 +101,10 @@ body{
 
 #ticTocToeGrid{
     display: none;
-    width: 24rem;
-    height: 24rem;
-    grid-template-columns: repeat(3,8rem);
-    grid-template-rows:  repeat(3, 8rem);
+    width: 21rem;
+    height: 21rem;
+    grid-template-columns: repeat(3,7rem);
+    grid-template-rows:  repeat(3, 7rem);
     border: 1px solid red;
     div{
         display: flex;
@@ -149,10 +148,10 @@ body{
 }
 
 #ticTacToeGridContainer{
-    width: 70%;
+    width: 100%;
     display: none;
     flex-direction: column;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: rgb(14, 13, 13);
     justify-content: center;
     gap: 1rem;
@@ -165,5 +164,5 @@ body{
 
 #Xplaysdisplay{
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
