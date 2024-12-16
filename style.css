@@ -1,0 +1,150 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(90deg, rgb(90, 197, 240), rgb(50, 129, 248));
+}
+
+#container{
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    justify-items: center;
+    width: 40rem;
+    height: 35rem;
+}
+
+.header{
+    font-size: 4rem;
+    font-weight: 600;
+    font-family: Roboto Flex;
+    font-style: italic;
+    margin-bottom: 2rem;
+}
+
+
+.gridElement{
+    border: 1px solid red;
+    p{
+        text-align: center;
+        font-size: 5rem;
+    }
+}
+
+#playerDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .playerBox{
+        display: flex;
+        gap: 2rem;
+
+        div{
+            display: grid;
+            grid-template-rows: repeat(4,1fr);
+            align-items: center;
+            gap: 1rem;
+
+            label{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 1.2rem;
+            }
+
+            .labelP{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 1.2rem;
+            }
+
+            input{
+                border-radius: 3px;
+                background-color: rgb(253, 210, 199);
+                border: 1px solid rgb(255, 108, 71);
+                font-size: 0.9rem;
+                padding: 0.12rem;
+            }
+
+            #player1SymbolSelctor{
+                width: 20%;
+                background-color:rgb(253, 210, 199);
+                border: 1px solid rgb(255, 108, 71);
+                height: 1.3rem;
+                border-radius: 3px;
+            }
+
+            #Player2SymbolSelector{
+                width: 20%;
+                background-color:rgb(253, 210, 199);
+                border: 1px solid rgb(255, 108, 71);
+                height: 1.3rem;
+                box-sizing: border-box;
+                padding-left: 0.3rem;
+                border-radius: 3px;
+            }
+            
+        }
+        
+    }
+    
+#startGame{
+    margin: 2rem 0rem;
+    button{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    padding: 0.3rem;
+    background-color:rgb(253, 210, 199);
+    }
+}
+}
+
+
+
+#ticTocToeGrid{
+    display: none;
+    width: 24rem;
+    height: 24rem;
+    grid-template-columns: repeat(3,8rem);
+    grid-template-rows:  repeat(3, 8rem);
+    border: 1px solid red;
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p{
+            color: rgb(255, 255, 255);
+        }
+    }
+}
+
+#resultAnnouncement{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    gap: 1rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.822);
+    button{
+        font-size: 1.4rem;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: 600;
+        padding: 0.5rem;
+        background-color:rgb(253, 210, 199);
+        border-radius: 5px;
+        }
+    p{
+        font-size: 5rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 4rem;
+        text-shadow: 0px 0px 10px rgba(253, 210, 199, 0.692);
+    }
+}
