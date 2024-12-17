@@ -9,7 +9,7 @@ function Player(playerName, symbol) {
     this.symbol = symbol;
 }
 
-// details of each celll of the grid
+// details of each celll of the  - later chnaged to flex
 
 function gameBoardCell(elementID, isSymbolX) {
     let eachCell = { elementID, isSymbolX };
@@ -116,7 +116,7 @@ function checkWinner(isWinnerAnnounced) {
 }
 
 function announcementText(name) {
-    document.querySelector("#resultAnnouncement").firstElementChild.innerText = `${name} wins`;
+    document.querySelector("#resultAnnouncement").firstElementChild.innerText = `${name} wins!!`;
     document.querySelector("#resultAnnouncement").style.display = "flex";
 
 }
@@ -190,10 +190,10 @@ let allGridDivs = document.querySelectorAll(".gridElement");
 
 allGridDivs.forEach((item) => { item.addEventListener("click", playGame) });
 
-// restart button listener
-let restartButton = document.querySelector("#resultAnnouncementButton").addEventListener("click", resetgame);
+// Reset button listener
+document.querySelector("#resultAnnouncementButton").addEventListener("click", restartGame);
 
-function resetgame() {
+function restartGame() {
     let gridElementList = document.querySelectorAll(".gridElement");
     gridElementList.forEach((item) => { item.firstElementChild.innerText = "" });
     document.querySelector("#playerDetails").style.display = "flex";
@@ -205,4 +205,14 @@ function resetgame() {
     CURRENTGAMEBOARD = {};
 }
 
+
+// Restart button listener
+document.querySelector("#continueSameGame").addEventListener("click", resetgame);
+
+function resetgame() {
+    let gridElementList = document.querySelectorAll(".gridElement");
+    gridElementList.forEach((item) => { item.firstElementChild.innerText = "" });
+    document.querySelector("#resultAnnouncement").style.display = "none";
+    CURRENTGAMEBOARD = initializeGame(CURRENTGAMEBOARD.player1.name, CURRENTGAMEBOARD.player2.name, CURRENTGAMEBOARD.player1.symbol, CURRENTGAMEBOARD.player2.symbol);
+}
 
